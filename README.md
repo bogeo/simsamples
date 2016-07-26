@@ -17,4 +17,4 @@ The framework has been developed using JDK 1.6.
 See the 'LICENSE'-file.
 
 ## Contact
-Benno Schmidt, Bochum University of Applied Sciences, Department of Geodesy, Lennerhofstr. 140, D-44801 Bochum
+Benno Schmidt, Bochum University of Applied Sciences, Department of Geodesy, Lennershofstr. 140, D-44801 Bochum
