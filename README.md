@@ -1,7 +1,8 @@
 # Dynamic simulation model examples
-
 These Java classes realize some simple dynamic simulation models. 
-The framework has been developed using JDK 1.6.
+
+Software requirements: Java Development Kit 1.6 or higher.
+The framework is kept simple and does not require any third-party components.
 
 ## Basic modeling approaches
 * Difference equation based simulation
@@ -21,6 +22,9 @@ Find the executable samples in the package de.hsbo.geo.simsamples.applications.
 * "Game of Life" as prominent Cellular Automaton;
 * Cellular elevation grid examples (evolutionary optimum finding algorithm, simple erosion model);
 * Simple transient circuit simulation (step response if a resistor-capacitor-element).
+
+## Visualization 
+Simulation results are displayed in the command-line. For some of the applications, additional X3DOM visualizations are available. 
 
 ## License information
 See the 'LICENSE'-file.
