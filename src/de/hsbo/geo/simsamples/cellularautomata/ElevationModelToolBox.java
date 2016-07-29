@@ -241,6 +241,7 @@ public class ElevationModelToolBox
 		w("</head>");
 		w("<body>");
 		w("  <h1>Cellular elevation grid</h1>");
+		w("  This file has been generated automatically.");
 		if (ti >= 0) {
 			w("  <p>Time step = " + ti + "</p>");
 		}
@@ -279,7 +280,7 @@ public class ElevationModelToolBox
         }
         else {
         	// Generate shapes of X3D type 'Box' for each cell:
-	        for (int i = dem.numberOfRows() - 1; i >= 0; i--) {
+	        for (int i = 0; i < dem.numberOfRows(); i++) {
 	            for (int j = 0; j < dem.numberOfColumns(); j++) 
 	            {
 	            	String idTransf = "transf_" + i + "_" + j; 
@@ -288,7 +289,13 @@ public class ElevationModelToolBox
 	            	w("      <Transform DEF='" + idTransf + "'" + 
 	            		" translation='" + moveTo + "'>");
 	            	w("        <Shape>");
-		            w("          <Appearance><Material/></Appearance>");
+	            	if ((i + j) % 2 == 0) {
+	            		w("          <Appearance>" +
+	            			"<Material diffuseColor='1 1 0'/></Appearance>");
+	            	} else {
+	            		w("          <Appearance>" + 
+	            			"<Material diffuseColor='0 1 0'/></Appearance>");
+	            	}
 			        w("          <Box size='1 1 1'/>");
 			        w("        </Shape>");
 	            	w("      </Transform>");

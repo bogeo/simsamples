@@ -1,6 +1,5 @@
 package de.hsbo.geo.simsamples.cellularautomata;
 
-import java.util.List;
 import java.util.Set;
 
 import de.hsbo.geo.simsamples.common.RandomValueGenerator;
