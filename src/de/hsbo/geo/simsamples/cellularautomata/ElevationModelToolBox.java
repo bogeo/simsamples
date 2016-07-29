@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-
 /**
  * Elevation model processing tools (for experimental purposes).
  * 
@@ -184,7 +183,8 @@ public class ElevationModelToolBox
 	}
 	
     /**
-     * writes a cellular elevation space to a X3DOM scene. 
+     * writes a cellular elevation space to a X3DOM scene. Inside the 3D scene,
+     * a shape of X3D-type <tt>ElevationGrid</tt> will be used. 
      *
      * @param dem Cellular elevation space
      * @param ti Time stamp
@@ -195,6 +195,29 @@ public class ElevationModelToolBox
     	RectangularSpace dem, int ti, String filename) 
         throws Exception
 	{
+    	this.writeGenericX3DomScene(dem, ti, filename, false);
+	}
+
+    /**
+     * writes a cellular elevation space to a X3DOM scene consisting of 
+     * animated quads. Important note: For cellular spaces of big size your
+     * system might not be able to display the scene!
+     *
+     * @param dem Cellular elevation space
+	 * @param filename Output file name 
+     * @throws Exception 
+     */
+    public void writeAnimatedX3DomQuadScene(
+        	RectangularSpace dem, String filename) 
+            throws Exception
+	{
+    	this.writeGenericX3DomScene(dem, -1, filename, true);
+	}
+    
+    private void writeGenericX3DomScene(
+    	RectangularSpace dem, int ti, String filename, boolean x3dQuads) 
+    	throws Exception
+    {
         // deltaX and deltaY will be set to 1. Thus a vertical scaling factor 
         // is introduced to obtain a suitable exaggeration: 
     	double dz = this.deltaElevation(dem);
@@ -218,7 +241,9 @@ public class ElevationModelToolBox
 		w("</head>");
 		w("<body>");
 		w("  <h1>Cellular elevation grid</h1>");
-		w("  <p>Time step = " + ti + "</p>");
+		if (ti >= 0) {
+			w("  <p>Time step = " + ti + "</p>");
+		}
 		w("  <x3d width='600px' height='500px'" + 
 			" profile='Interactive' version='3.3'" + 
 			" noNamespaceSchemaLocation=" + 
@@ -228,28 +253,81 @@ public class ElevationModelToolBox
         	" position='" + px + " " + (zf * 25. * pz) + " " + py + "'" +
         	" centerOfRotation='" + px + " " + (zf * pz) + " " + py + "'>" + 
         	"</Viewpoint>");
-        w("      <Shape>");
-        w("        <Appearance>");
-        w("          <Material/>");
-        w("        </Appearance>");
-        w("        <ElevationGrid " +
-        	" solid='false'" +
-        	" xDimension='" + dem.numberOfColumns() + "'" +
-        	" xSpacing='1'" + 
-        	" zDimension='" + dem.numberOfRows()+ "'" + 
-        	" zSpacing='1'" +
-        	" height='");
-
-        // Elevation-values:
-        for (int i = dem.numberOfRows() - 1; i >= 0; i--) {
-            for (int j = 0; j < dem.numberOfColumns(); j++) {
-            	double z = (Double) dem.getCell(i, j).getValue(ti);
-                w("" + (zf * z) + " ");
-            }
+        
+        if (!x3dQuads) {
+        	// Generate shape of X3D type 'ElevationGrid':
+            w("      <Shape>");
+            w("        <Appearance><Material/></Appearance>");
+	        w("        <ElevationGrid " +
+	        	" solid='false'" +
+	        	" xDimension='" + dem.numberOfColumns() + "'" +
+	        	" xSpacing='1'" + 
+	        	" zDimension='" + dem.numberOfRows()+ "'" + 
+	        	" zSpacing='1'" +
+	        	" height='");
+	
+	        // Elevation-values:
+	        for (int i = dem.numberOfRows() - 1; i >= 0; i--) {
+	            for (int j = 0; j < dem.numberOfColumns(); j++) {
+	            	double z = (Double) dem.getCell(i, j).getValue(ti);
+	                w("" + (zf * z) + " ");
+	            }
+	        }
+	        w("'>");
+	        w("        </ElevationGrid>");
+	        w("      </Shape>");
         }
-        w("'>");
-        w("        </ElevationGrid>");
-        w("      </Shape>");
+        else {
+        	// Generate shapes of X3D type 'Box' for each cell:
+	        for (int i = dem.numberOfRows() - 1; i >= 0; i--) {
+	            for (int j = 0; j < dem.numberOfColumns(); j++) 
+	            {
+	            	String idTransf = "transf_" + i + "_" + j; 
+	            	double z = (Double) dem.getCell(i, j).getInitialValue();
+	                String moveTo = "" + i + " " + (zf * z) + " " + j;
+	            	w("      <Transform DEF='" + idTransf + "'" + 
+	            		" translation='" + moveTo + "'>");
+	            	w("        <Shape>");
+		            w("          <Appearance><Material/></Appearance>");
+			        w("          <Box size='1 1 1'/>");
+			        w("        </Shape>");
+	            	w("      </Transform>");
+	            }
+	        }
+	        
+	        w("      <TimeSensor DEF='time' cycleInterval='" 
+	        		+ dem.getCell(0, 0).timeSeries.size() + "' loop='true'/>");
+	        for (int i = dem.numberOfRows() - 1; i >= 0; i--) {
+	            for (int j = 0; j < dem.numberOfColumns(); j++) 
+	            {
+	            	Cell c = dem.getCell(i, j);
+	            	
+	            	String idInterp = "move_" + i + "_" + j; 
+	            	String idTransf = "transf_" + i + "_" + j; 
+	            	w("		 <PositionInterpolator DEF='" + idInterp + "' " + 
+	            		"key='");
+					for (int t = 0; t < c.timeSeries.size(); t++) {
+						w(((double) t / (double) c.timeSeries.size()) + " ");
+					}
+					w("' keyValue='");
+					for (int t = 0; t < c.timeSeries.size(); t++) {
+						double z = (Double) c.getValue(t);
+						w("" + i + " " + (zf * z) + " " + j + " ");
+					}
+					w("		   '/>");
+					w("      <Route" + 
+						" fromNode='time' fromField='fraction_changed'" + 
+						" toNode='" + idInterp + "'" + 
+						" toField='set_fraction'></Route>");
+					w("      <Route" + 
+						" fromNode='" + idInterp + "'" +
+						" fromField='value_changed'" + 
+						" toNode='" + idTransf + "'" + 
+						" toField='translation'></Route>");
+	            }
+	        }
+        }
+        
 		w("    </Scene>");
 		w("  </x3d>");
 		w("</body>");
@@ -258,7 +336,7 @@ public class ElevationModelToolBox
 		w.close(); 
 		System.out.println("Wrote file \"" + filename + "\".");
 	}
-
+    
     private double deltaElevation(RectangularSpace dem) throws Exception 
     {
     	double zMin = 42., zMax = 42.;

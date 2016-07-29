@@ -1,5 +1,6 @@
 package de.hsbo.geo.simsamples.cellularautomata;
 
+import java.util.List;
 import java.util.Set;
 
 import de.hsbo.geo.simsamples.common.RandomValueGenerator;
@@ -69,7 +70,7 @@ public class RectangularAutomaton extends CellularAutomaton
 		}
 
 		// Then step through time:
-		for (int ti = 0; ti < numberOfSteps; ti++) {
+		for (int ti = 0; ti <= numberOfSteps; ti++) {
 			this.step();
 
 			if (this.consoleDump) {
@@ -89,6 +90,8 @@ public class RectangularAutomaton extends CellularAutomaton
 	@Override
 	public void step() throws Exception 
 	{
+		this.delta.beforeStep(this.ti); 
+
 		Cell[][] arr = ((RectangularSpace) this.cells).getCellArray();
 		for (int i = 0; i < this.nx; i++) {
 			for (int j = 0; j < this.ny; j++) {

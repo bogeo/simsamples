@@ -29,7 +29,7 @@ public class CellularElevationModelExample
 
 		// Read digital elevation model from file and create corresponding
 		// rectangular automaton:
-		a = tb.createAutomaton("./data/sampleDEM.asc", delta);
+		a = tb.createAutomaton("./data/sampleDEM.asc", delta); 
 
 		// Execute 40 time steps:
 		a.disableConsoleDump();

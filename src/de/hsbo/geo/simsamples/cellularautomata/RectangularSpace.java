@@ -162,6 +162,41 @@ public class RectangularSpace extends CellularSpace
 		return res;
 	} 
 
+	/**
+	 * gets a {@link Cell}s neighbor cells in the given direction. The 
+	 * parameter <tt>direction</tt> specifies the direction by numbering 
+	 * the direction in clockwise order from North to Northwest, i.e. 0 = N, 
+	 * 1 = NE, 2 = E, ..., 7 = NW.
+	 * 
+	 * @param i Row index
+	 * @param j Column index
+	 * @param direction Direction (0..7)
+	 * @return Cell object (<i>null</i> at space edge)
+	 */
+	public Cell getNeighborCell(int i, int j, short direction)
+	{
+		switch (direction) {
+		case 0: // N
+			return i > 0 ? this.cells[i - 1][j] : null;
+		case 1: // NE
+			return i > 0 && j < ny - 1 ? this.cells[i - 1][j + 1] : null;
+		case 2: // E
+			return j < ny - 1 ? this.cells[i][j + 1] : null;
+		case 3: // SE
+			return i < nx - 1 && j < ny - 1 ? this.cells[i + 1][j + 1] : null;
+		case 4: // S
+			return i < nx - 1 ? this.cells[i + 1][j] : null;
+		case 5: // SW
+			return i < nx - 1 && j > 0 ? this.cells[i + 1][j - 1] : null;
+		case 6: // W
+			return j > 0 ? this.cells[i][j - 1] : null;
+		case 7: // NW
+			return i > 0 && j > 0 ? this.cells[i - 1][j - 1] : null;
+		}
+		System.out.println("Illegal direction in neighbor query:" + direction);
+		return null;
+	}
+
 	@Override
 	public void dump(int ti) throws Exception 
 	{

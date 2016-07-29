@@ -37,14 +37,14 @@ public class SimpleErosion extends TransitionFunction
 	@Override
 	public void step(Cell c, int ti) throws Exception 
 	{
-		Double z = (Double)(c.getValue(ti));
+		Double z = (Double) c.getValue(ti);
 
 		// Determine neighbor with lowest elevation:
 		List<Cell> neighs = c.getNeighbors(NeighborhoodIndex.NEIGH_8());
 		Double zMin = z;
 		Cell cMin = c;
 		for (Cell n : neighs) {
-			Double zN = (Double)(n.getValue(ti));
+			Double zN = (Double) n.getValue(ti);
 			if (zN < zMin) {
 				zMin = zN; cMin = c;
 			}

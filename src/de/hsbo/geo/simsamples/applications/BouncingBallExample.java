@@ -78,7 +78,7 @@ public class BouncingBallExample
 		w("          <Appearance>");
 		w("            <Material diffuseColor='0 1 0'/>");
 		w("          </Appearance>");
-		w("          <Box size='10 0.1 10' />");
+		w("          <Box size='10 0.1 10'/>");
 		w("        </Shape>");
 		w("      </Transform>");
 		w("      <TimeSensor DEF='time' cycleInterval='" 
