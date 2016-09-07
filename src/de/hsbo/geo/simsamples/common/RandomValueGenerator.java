@@ -72,4 +72,6 @@ public class RandomValueGenerator
 	static public Cell randomCell(RectangularSpace sp) throws Exception {
 		return sp.getCell(RandomValueGenerator.randomLocation(sp));
 	}
+	
+	// TODO: Add Gaussian distribution 
 }

@@ -10,6 +10,7 @@ The framework is kept simple and does not require any third-party components.
 * Cellular elevation grid (still experimental)
 * Simple circuit analysis (node voltage analysis)
 * Simple agent-based evolutionary example
+* Discrete event-based simulation (event queues) 
 
 ## Example applications
 Find the executable samples in the package de.hsbo.geo.simsamples.applications, e.g.

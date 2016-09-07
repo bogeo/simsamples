@@ -2,14 +2,12 @@ package de.hsbo.geo.simsamples.diffequations;
 
 import java.util.List;
 
+import de.hsbo.geo.simsamples.common.OutputFormat;
 import de.hsbo.geo.simsamples.common.Simulator;
 
 /**
  * Simulator to run difference equation based models. Note that this 
  * simulator allows to process simple System-Dynamics-like descriptions. 
- * For floating-point values that are given as console output, precision 
- * is limited to 6 digits after the decimal point (which is given as ',' 
- * instead of '.' by default, see {@link DESimulation#decimalPoint}).
  * 
  * @author Benno Schmidt
  */
@@ -18,7 +16,6 @@ public class DESimulation extends Simulator
 	private DEModel model;
 	private double tStart = 0., tEnd = 10., deltaT = 1.;
 	private IntegrationMethod methIntegr = IntegrationMethod.FORWARD_EULER;
-	public char decimalPoint = ','; 
 	
 	
 	public DESimulation(DEModel model) {
@@ -84,9 +81,7 @@ public class DESimulation extends Simulator
 		this.numberOfSteps = numberOfSteps;
 		this.beforeExecute();
 		
-		if (this.consoleDump) {
-			this.dumpNames("ti", "t", this.model.getLevels());
-		}
+		this.dumpNames("ti", "t", this.model.getLevels());
 		
 		for (int ti = 0; ti < numberOfSteps; ti++) {
 			this.model.step(ti);
@@ -109,16 +104,12 @@ public class DESimulation extends Simulator
 				this.methIntegr = IntegrationMethod.RUNGE_KUTTA;
 			}
 			
-			if (consoleDump) {
-				this.dumpValues(ti, ti * this.getDeltaT(), this.model.getLevels());
-			}
+			this.dumpValues(ti, ti * this.getDeltaT(), this.model.getLevels());
 		}
 		
-		if (consoleDump) {
-			this.dumpValues(
-				numberOfSteps, numberOfSteps * this.getDeltaT(), 
-				this.model.getLevels());
-		}
+		this.dumpValues(
+			numberOfSteps, numberOfSteps * this.getDeltaT(), 
+			this.model.getLevels());
 		
 		this.afterExecute();
 	}
@@ -139,6 +130,9 @@ public class DESimulation extends Simulator
 
 	private void dumpNames(String s1, String s2, List<Level> levels) 
 	{
+		if (!consoleDump) 
+			return;
+
 		StringBuffer s = new StringBuffer();
 
 		s.append(s1); 
@@ -154,16 +148,19 @@ public class DESimulation extends Simulator
 
 	private void dumpValues(int ti, double t, List<Level> levels) 
 	{
+		if (!consoleDump) 
+			return;
+
 		StringBuffer s = new StringBuffer();
 
 		s.append(ti); 
 		s.append("\t"); 
-		s.append(this.round(t)); 
+		s.append(OutputFormat.time(t)); 
 		for (Level l : levels) {
 			s.append("\t");
 			try {
 				double val = (Double) l.getValue(ti);
-				s.append(this.round(val));
+				s.append(OutputFormat.floatingPoint(val));
 			} 
 			catch (Exception e) {
 				s.append("error");
@@ -171,14 +168,9 @@ public class DESimulation extends Simulator
 		}
 
 		String str = s.toString();
-		str = str.replace('.', decimalPoint); 
 		System.out.println(str);
 	}
 
-	private double round(double val) {
-		return Math.round(1.e6 * val) / 1.e6;  
-	}
-	
 	public String toString() 
 	{
 		StringBuffer s = new StringBuffer();

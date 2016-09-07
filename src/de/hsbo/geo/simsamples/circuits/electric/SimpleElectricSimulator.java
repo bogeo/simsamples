@@ -286,8 +286,8 @@ public class SimpleElectricSimulator extends CircuitSimulator
 		
 		rec.appendData(ti, t);
 		for (int i = 1; i <= mN; i++) { 
-			int j = rec.getIndex(new CircuitNode(i));
-			if (j >= 0) {
+			int x = rec.getIndex(new CircuitNode(i));
+			if (x >= 0) {
 				rec.appendData(new CircuitNode(i), ti, mV[i]);       			
 			}
 		}

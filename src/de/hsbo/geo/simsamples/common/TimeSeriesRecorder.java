@@ -6,7 +6,10 @@ import java.util.List;
 import de.hsbo.geo.simsamples.circuits.CircuitNode;
 
 /**
- * TODO JvaDoc auch in Methoden
+ * Utility class to record time-series for multiple {@link CircuitNode}s. 
+ * TODO: Implementation could be extended to {@link 
+ * de.hsbo.geo.simsamples.diffequations.Level} objects or even 
+ * non-double-valued discrete state sets in the future...
  * 
  * @author Benno Schmidt
  */
@@ -96,7 +99,8 @@ public class TimeSeriesRecorder
 	
 	private Object round(Object valObj) {
 		if (valObj instanceof Double)
-			return "" + Math.round(1.e12 * ((Double) valObj).doubleValue()) / 1.e12;
+			return "" + 
+				Math.round(1.e12 * ((Double) valObj).doubleValue()) / 1.e12;
 		else 
 			return valObj;
 	}
