@@ -1,5 +1,6 @@
 package de.hsbo.geo.simsamples.common;
 
+import java.util.Random;
 import java.util.Set;
 
 import de.hsbo.geo.simsamples.cellularautomata.Cell;
@@ -14,23 +15,65 @@ import de.hsbo.geo.simsamples.cellularautomata.RectangularSpace;
  */
 public class RandomValueGenerator 
 {
+	static private Random rand = new Random();
+	
+	
 	/**
-	 * generates a random number in the range from <tt>min</tt> to 
-	 * <tt>max</tt>. The result will be an integer value greater or equal 
-	 * than <tt>min</tt> and less or equal than <tt>max</tt>.
+	 * returns a random integer number in the range from <tt>min..max</tt>. The
+	 * result will be an integer value greater or equal than <tt>min</tt> and 
+	 * less or equal than <tt>max</tt>. A uniform distribution is assumed, i.e.
+	 * the probability of selecting a number is constant for all numbers. 
 	 * 
-	 * @param min
-	 * @param max
 	 * @return Random number 
 	 */
 	static public int number(int min, int max) {
 		return (int)((max - min + 1) * Math.random() + min);
 	}
-	
+
 	/**
-	 * chooses an element from a set of objects randomly.
+	 * returns a random double number in the range from <tt>min..max</tt>. The
+	 * result will be a floating-point value greater or equal than <tt>min</tt> 
+	 * and less than <tt>max</tt>. A uniform distribution is assumed. 
 	 * 
-	 * @param objects
+	 * @return Random number 
+	 */
+	static public double number(double min, double max) {
+		return (max - min) * Math.random() + min;
+	}
+
+	/**
+	 * returns a random double number in the range from <tt>min..max</tt>. A 
+	 * Gaussian distribution (aka standard normal distribution) characterized
+	 * by the parameters <tt>mean</tt> and <tt>sDeviation</tt> (scale aka
+	 * standard deviation "sigma", square-root of the variance) is assumed. 
+	 * The result will be a floating-point value greater or equal than the 
+	 * lower cut-off value <tt>min</tt> and less or equal than the upper 
+	 * cut-off value <tt>max</tt>. 
+	 * 
+	 * @param min Lower cut-off value
+	 * @param max Upper cut-off limit
+	 * @param mean Mean
+	 * @param sDeviation Standard deviation
+	 * @return Random number 
+	 */
+	static public double number(
+		double min, double max, double mean, double sDeviation) 
+	{
+		boolean insideInterval = false;
+		double val; 
+		do {
+			val = sDeviation * rand.nextGaussian() + mean;
+			if (val >= min && val <= max) 
+				insideInterval = true;
+		} while (!insideInterval);
+		return val;
+	}
+
+	/**
+	 * chooses an element from a set of objects randomly. A uniform 
+	 * distribution is assumed, i.e. the probability of selecting an object 
+	 * is constant for all objects.
+	 * 
 	 * @return Random object
 	 */
 	static public Object chooseRandomly(Set<Object> objects) 
@@ -40,9 +83,10 @@ public class RandomValueGenerator
 	}
 
 	/**
-	 * chooses an element from an arbitrary number of objects randomly.
+	 * chooses an element from an arbitrary number of objects randomly. A 
+	 * uniform distribution is assumed, i.e. the probability of selecting an 
+	 * object is constant for all objects.
 	 * 
-	 * @param objects
 	 * @return Random object
 	 */
 	static public Object chooseRandomly(Object... objects) 
@@ -51,7 +95,9 @@ public class RandomValueGenerator
 	}
 	
 	/**
-	 * generates a random location inside a rectangular cell space.
+	 * generates a random location inside a rectangular cell space. A uniform
+	 * distribution is assumed, i.e. the probability of selecting a location 
+	 * is constant for all cell space elements.
 	 *  
 	 * @param sp Rectangular cell space
 	 * @return Location information
@@ -63,7 +109,9 @@ public class RandomValueGenerator
 	}
 
 	/**
-	 * generates a random location inside a rectangular cell space.
+	 * generates a random location inside a rectangular cell space. A uniform
+	 * distribution is assumed, i.e. the probability of selecting a cell 
+	 * is constant for all cells.
 	 *  
 	 * @param sp Rectangular cell space
 	 * @return {@link CellImpl} object
@@ -72,6 +120,4 @@ public class RandomValueGenerator
 	static public Cell randomCell(RectangularSpace sp) throws Exception {
 		return sp.getCell(RandomValueGenerator.randomLocation(sp));
 	}
-	
-	// TODO: Add Gaussian distribution 
 }

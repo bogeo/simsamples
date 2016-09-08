@@ -7,7 +7,7 @@ import de.hsbo.geo.simsamples.diffequations.Level;
 /**
  * Simple demographic model. Note that this model does not use the numerical
  * integration method {@link DEModel#integrate(Level, int, double)}. 
- * Nonetheless is useful to implement the model as {@link DEModel}, since 
+ * Nonetheless it is useful to implement the model as {@link DEModel}, since 
  * this provides level and parameter definition and access functionality.
  * 
  * @author Benno Schmidt

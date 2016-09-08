@@ -82,7 +82,7 @@ public class ResultManager
 	 * gets the number of recorded simulation steps (<tt>ti</tt>).
 	 */
 	public int numberOfSteps() {
-		return res.size();
+		return res.size() - 1; // without ti = 0
 	}
 
 	private void register(String ename) {

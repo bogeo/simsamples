@@ -84,7 +84,6 @@ public class SimpleServerCustomerSimulator extends EventQueueSimulator
 	private void execute(EventQueue qAdd) throws Exception 
 	{
 		this.beforeExecute();
-		
 		this.initialize();
 
 		if (qAdd != null) {
@@ -123,7 +122,6 @@ public class SimpleServerCustomerSimulator extends EventQueueSimulator
 		t = 0;
 		ti = 0;
 		q = new EventQueue(); // holds the events to be handled
-		
 		resRec = new ResultManager(); 
 		
 		for (Object obj : freeServers.getAll())
@@ -239,8 +237,7 @@ public class SimpleServerCustomerSimulator extends EventQueueSimulator
 	
 	private void dumpQueues(String prolog) 
 	{
-		if (!consoleDump) 
-			return;
+		if (!consoleDump) return;
 
 		if (prolog != null) 
 			System.out.println(prolog);
@@ -264,11 +261,8 @@ public class SimpleServerCustomerSimulator extends EventQueueSimulator
 		dumpComment(str, "\n>> ");
 	}
 
-	private void dumpComment(String str, String pre) 
-	{
-		if (!consoleDump) 
-			return;
-
-		System.out.println(pre + str);
+	private void dumpComment(String str, String pre) {
+		if (consoleDump) 
+			System.out.println(pre + str);
 	}
 }
