@@ -8,7 +8,7 @@ package de.hsbo.geo.simsamples.common;
  */
 abstract public class Simulator 
 {
-	protected boolean consoleDump = true; 
+	protected boolean consoleDump = false; 
 	private long sysTimeStart, sysTimeEnd; 
 	protected int numberOfSteps;
 

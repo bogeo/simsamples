@@ -1,5 +1,6 @@
 package de.hsbo.geo.simsamples.applications;
 
+import de.hsbo.geo.simsamples.common.RandomValueGenerator;
 import de.hsbo.geo.simsamples.eventqueues.servercustomer.Customer;
 import de.hsbo.geo.simsamples.eventqueues.servercustomer.CustomerQueue;
 import de.hsbo.geo.simsamples.eventqueues.servercustomer.Server;
@@ -64,7 +65,10 @@ public class PubExample
 		}
 		@Override
 		public double getDuration() {
-			return dt + (Math.random() - 0.5) * 2.; 
+			double var = RandomValueGenerator.number(-2., +2., 0., 1.); 
+			// = normal-distributed variation (mean 0, standard deviation 1)
+			return dt + var;
+			
 		}
 	}
 
@@ -76,7 +80,7 @@ public class PubExample
 			this.dt = serviceTime;
 		}
 		public double getDuration() {
-			return dt + (Math.random() - 0.5) * 2.; 
+			return dt + RandomValueGenerator.number(-1., +1., 0., 1.);
 		}
 	}
 }

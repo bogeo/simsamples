@@ -1,6 +1,7 @@
 package de.hsbo.geo.simsamples.applications;
 
 import de.hsbo.geo.simsamples.common.OutputFormat;
+import de.hsbo.geo.simsamples.common.RandomValueGenerator;
 import de.hsbo.geo.simsamples.eventqueues.EventEntry;
 import de.hsbo.geo.simsamples.eventqueues.EventQueue;
 import de.hsbo.geo.simsamples.eventqueues.servercustomer.Customer;
@@ -53,7 +54,7 @@ public class FireBrigadeExample
 		double timeInterval = 48./*hours*/;
 		EventQueue q = new EventQueue();
 		for (int i = 0; i < houses.length; i++) {
-			double t = timeInterval * Math.random();
+			double t = RandomValueGenerator.number(0., (double) timeInterval);
 			q.enqueue(new EventEntry(t, Event.NEEDS_SERVICE, houses[i])); 
 		}
 
