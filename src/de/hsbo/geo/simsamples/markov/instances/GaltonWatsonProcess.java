@@ -8,16 +8,16 @@ import de.hsbo.geo.simsamples.markov.MarkovChain;
  * Base class for Galton-Watson model implementations. This class 
  * provides a simple standard implementation for the method {@link 
  * GaltonWatsonProcess#numberOfDescendants()} which determines the number 
- * of descendants of a single individuum. Note that you might want to 
- * provide your own implementation by deriving a class and override this 
- * method.
+ * of descendants of a single individuum (geometric distribution as default). 
+ * Note that you might want to provide your own implementation by overriding 
+ * this method in a derived class.
  * 
  * @author Benno Schmidt
  */
 public class GaltonWatsonProcess extends MarkovChain 
 {
 	private long pop = 1;
-	private Level lev = new Level("pop");;
+	private Level lev = new Level("pop");
 	
 	
 	/**
@@ -70,7 +70,7 @@ public class GaltonWatsonProcess extends MarkovChain
 	/**
 	 * gets the final population value. 
 	 * 
-	 * @param pop Integer value >= 0
+	 * @return Integer value >= 0
 	 */
 	public long getFinalPopulation() {
 		return pop;
@@ -83,6 +83,15 @@ public class GaltonWatsonProcess extends MarkovChain
 			System.out.println(ti + "\t" + lev.getValue(ti)); 
 	}
 
+	/**
+	 * determines the number of descendants of a single individuum. This method
+	 * might be overridden. The default implementation uses the geometric 
+	 * distribution <tt>p(k) = 1 / 2**(k+1)</tt> where <tt>p(k)</tt> denotes 
+	 * the probability an individuum has <tt>k</tt> descendants, i.e. <tt>p(0)
+	 * = 1/2, p(1) = 1/4, p(2) = 1/8</tt> etc. 
+	 * 
+	 * @return Individual number of descendants
+	 */
 	protected long numberOfDescendants() {
 		double pd = RandomValueGenerator.number(0., 1.);
 		double p = 0.5; 
