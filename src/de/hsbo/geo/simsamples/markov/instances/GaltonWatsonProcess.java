@@ -2,19 +2,19 @@ package de.hsbo.geo.simsamples.markov.instances;
 
 import de.hsbo.geo.simsamples.common.RandomValueGenerator;
 import de.hsbo.geo.simsamples.diffequations.Level;
-import de.hsbo.geo.simsamples.markov.MarkovChain;
+import de.hsbo.geo.simsamples.markov.MarkovProcess;
 
 /**
  * Base class for Galton-Watson model implementations. This class 
  * provides a simple standard implementation for the method {@link 
  * GaltonWatsonProcess#numberOfDescendants()} which determines the number 
- * of descendants of a single individuum (geometric distribution as default). 
+ * of descendants of a single individual (geometric distribution as default). 
  * Note that you might want to provide your own implementation by overriding 
  * this method in a derived class.
  * 
  * @author Benno Schmidt
  */
-public class GaltonWatsonProcess extends MarkovChain 
+public class GaltonWatsonProcess extends MarkovProcess 
 {
 	private long pop = 1;
 	private Level lev = new Level("pop");

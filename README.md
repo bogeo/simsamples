@@ -11,7 +11,7 @@ The framework is kept simple and does not require any third-party components.
 * Simple circuit analysis (node voltage analysis)
 * Simple agent-based evolutionary example
 * Discrete event-based simulation (event queues)
-* Selected Markov processes (still under construction) 
+* Markov chains 
 
 ## Example applications
 Find the executable samples in the package de.hsbo.geo.simsamples.applications, e.g.
@@ -23,6 +23,7 @@ Find the executable samples in the package de.hsbo.geo.simsamples.applications, 
 * "Game of Life" as prominent Cellular Automaton;
 * Cellular elevation grid examples (evolutionary optimum finding algorithm, simple erosion model);
 * Simple transient circuit simulation (step response if a resistor-capacitor-element);
+* Simple Markov models for movements in geographic space;
 * Galton-Watson population model.
 
 ## Visualization 
