@@ -6,8 +6,8 @@ import de.hsbo.geo.simsamples.diffequations.instances.ExponentialGrowthModel;
 
 /**
  * Sample application that executes a model showing exponential growth. The 
- * underlying model <tt>x(t+1) = r * x(t)</tt> is defined in the class {@link 
- * ExponentialGrowthModel}.
+ * underlying model <tt>x(t+1) = (1 + r) * x(t)</tt> is defined in the class 
+ * {@link ExponentialGrowthModel}.
  * 
  * @author Benno Schmidt
  */
@@ -17,6 +17,7 @@ public class ExponentialGrowthExample
 	{
 		DEModel m = new ExponentialGrowthModel();
 		DESimulation a = new DESimulation(m);
+		a.enableConsoleDump();
 
 		// Set growth parameter r:
 		m.parameter("r").setValue(0.1);

@@ -5,7 +5,7 @@ import de.hsbo.geo.simsamples.diffequations.DEModel;
 
 /**
  * Logistic growth according Verhulst's model 
- * <tt>x(t+1) = r * x(t) + r/k * x(t)^2</tt>.
+ * <tt>x(t+1) = (1 + r) * x(t) + r/k * x(t)^2</tt>.
  * 
  * @author Benno Schmidt
  */

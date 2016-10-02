@@ -8,8 +8,8 @@ import de.hsbo.geo.simsamples.diffequations.instances.VerhulstModel;
 /**
  * Sample application that executes Verhulst's famous model showing logistic 
  * growth as well as chaotic behavior. The underlying model 
- * <tt>x(t+1) = r * x(t) - r/k * x(t)^2</tt> is defined in the class 
- * {@link ExponentialGrowthModel}.
+ * <tt>x(t+1) = (1 + r) * x(t) - r/k * x(t)^2</tt> is defined in the class 
+ * {@link VerhulstModel}.
  * 
  * @author Benno Schmidt
  */
@@ -19,6 +19,7 @@ public class VerhulstExample
 	{
 		DEModel m = new VerhulstModel();
 		DESimulation a = new DESimulation(m);
+		a.enableConsoleDump();
 
 		m.parameter("k").setValue(1000.); 
 		m.level("x").setInitialValue(10.); // Initial value for x(t)
