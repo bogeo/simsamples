@@ -22,7 +22,7 @@ Find the executable samples in the package de.hsbo.geo.simsamples.applications, 
 * Simple population dynamics (Verhulst model and a cellular population development model); 
 * "Game of Life" as prominent Cellular Automaton;
 * Cellular elevation grid examples (evolutionary optimum finding algorithm, simple erosion model);
-* Simple transient circuit simulation (step response if a resistor-capacitor-element);
+* Simple transient circuit simulation (step response of a resistor-capacitor-element);
 * Simple Markov models for movements in geographic space;
 * Galton-Watson population model.
 

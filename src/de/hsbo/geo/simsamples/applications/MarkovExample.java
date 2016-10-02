@@ -23,8 +23,8 @@ public class MarkovExample
 			50000, 30000, 20000
 		}; // i.e., N = 100000 
 
-		// Initially, 50000 individuals for state "London", 30000 for "Suburbs"
-		// etc.
+		// Initially, 50000 individuals for state "London", 
+		// 30000 for "Suburbs" etc.
 		
 		ArrayList<Object> stateSet = new ArrayList<Object>();
 		for (String d : locations)
