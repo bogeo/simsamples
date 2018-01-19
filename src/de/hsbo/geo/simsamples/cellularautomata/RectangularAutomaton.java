@@ -114,7 +114,7 @@ public class RectangularAutomaton extends CellularAutomaton
 					Object val = RandomValueGenerator.chooseRandomly(states);
 					arr[i][j].setInitialValue(val); 
 				}
-				// TODO continuousstatese
+				// TODO ContinuousStateSet
 			}
 		}
 		this.initialized = true;

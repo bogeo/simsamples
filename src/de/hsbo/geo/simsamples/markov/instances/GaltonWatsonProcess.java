@@ -50,7 +50,7 @@ public class GaltonWatsonProcess extends MarkovProcess
 					System.out.print((i > 0 ? " + " : " ") + z);
 			}
 			if (consoleDump) 
-				System.out.println(((pop > 0) ? " = " : " ") + sum);
+				System.out.println((pop > 0 ? " = " : " ") + sum);
 			pop = sum;
 			lev.setValue(ti, pop);
 		}
