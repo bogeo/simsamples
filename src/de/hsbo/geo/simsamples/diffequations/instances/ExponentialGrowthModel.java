@@ -4,7 +4,7 @@ import de.hsbo.geo.simsamples.common.Parameter;
 import de.hsbo.geo.simsamples.diffequations.DEModel;
 
 /**
- * Simple exponential growth model <tt>x(t+1) = (1 + r) * x(t)</tt>.
+ * Simple exponential growth model <tt>x(t+1) = x(t) + r * x(t)</tt>.
  * 
  * @author Benno Schmidt
  */
