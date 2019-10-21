@@ -22,6 +22,7 @@ public class HarmonicOscillatorExample
 		a.setEndTime(10.);
 		a.setDeltaT(0.04);
 		
+		a.enableConsoleDump();
 		a.execute();
 	}
 }
